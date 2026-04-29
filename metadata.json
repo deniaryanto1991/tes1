@@ -1,0 +1,6 @@
+{
+  "name": "Sistem PPDB Digital",
+  "description": "Aplikasi pendataan siswa baru terintegrasi dengan Google Sheets, dilengkapi dashboard statistik dan manajemen data siswa.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

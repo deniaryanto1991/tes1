@@ -1,0 +1,137 @@
+/**
+ * KONFIGURASI GOOGLE APPS SCRIPT
+ * 
+ * 1. Buat Google Spreadsheet baru.
+ * 2. Di Spreadsheet, klik Extensions > Apps Script.
+ * 3. Hapus kode yang ada dan tempelkan kode di bawah ini.
+ * 4. Klik Deploy > New Deployment.
+ * 5. Pilih "Web App".
+ * 6. Set Description: "PPDB API".
+ * 7. Set Execute as: "Me" (Email Anda).
+ * 8. Set Who has access: "Anyone".
+ * 9. Klik Deploy. Izinkan akses jika diminta.
+ * 10. Salin "Web App URL" dan tempelkan ke variabel VITE_GAS_URL di .env.example (nanti).
+ */
+
+/*
+const SHEET_NAME = 'DataSiswa';
+
+function setup() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName(SHEET_NAME);
+  if (!sheet) {
+    sheet = ss.insertSheet(SHEET_NAME);
+  }
+  
+  const headers = [
+    'ID', 'Timestamp', 'Nama', 'NIK', 'NIS', 'Tahun Ajaran', 'Kelas', 
+    'Jenis Kelamin', 'Tempat Lahir', 'Tanggal Lahir', 'Alamat', 
+    'Nama Ayah', 'NIK Ayah', 'Pekerjaan Ayah', 'Penghasilan Ayah',
+    'Nama Ibu', 'NIK Ibu', 'Pekerjaan Ibu', 'Penghasilan Ibu'
+  ];
+  
+  sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
+  sheet.setFrozenRows(1);
+}
+
+function doGet() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName(SHEET_NAME);
+  const data = sheet.getDataRange().getValues();
+  const headers = data[0];
+  const rows = data.slice(1);
+  
+  const jsonData = rows.map(row => {
+    let obj = {};
+    headers.forEach((header, index) => {
+      obj[header] = row[index];
+    });
+    return obj;
+  });
+  
+  // Return reversed to show newest at top (if not already sorted)
+  return ContentService.createTextOutput(JSON.stringify(jsonData.reverse()))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName(SHEET_NAME);
+  const body = JSON.parse(e.postData.contents);
+  const action = body.action;
+  const payload = body.data;
+
+  if (action === 'CREATE') {
+    const newRow = [
+      Utilities.getUuid(),
+      new Date().toISOString(),
+      payload.nama,
+      payload.nik,
+      payload.nis,
+      payload.academicYear,
+      payload.class,
+      payload.gender,
+      payload.pob,
+      payload.dob,
+      payload.address,
+      payload.parentData?.namaAyah || '',
+      payload.parentData?.nikAyah || '',
+      payload.parentData?.pekerjaanAyah || '',
+      payload.parentData?.penghasilanAyah || '',
+      payload.parentData?.namaIbu || '',
+      payload.parentData?.nikIbu || '',
+      payload.parentData?.pekerjaanIbu || '',
+      payload.parentData?.penghasilanIbu || ''
+    ];
+    sheet.appendRow(newRow);
+    return ContentService.createTextOutput(JSON.stringify({ success: true }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  if (action === 'UPDATE') {
+    const data = sheet.getDataRange().getValues();
+    const idIndex = 0; // Kolom ID
+    for (let i = 1; i < data.length; i++) {
+      if (data[i][idIndex] === payload.id) {
+        const rowNum = i + 1;
+        const updateRow = [
+          payload.id,
+          data[i][1], // Keep original timestamp
+          payload.nama,
+          payload.nik,
+          payload.nis,
+          payload.academicYear,
+          payload.class,
+          payload.gender,
+          payload.pob,
+          payload.dob,
+          payload.address,
+          payload.parentData?.namaAyah || '',
+          payload.parentData?.nikAyah || '',
+          payload.parentData?.pekerjaanAyah || '',
+          payload.parentData?.penghasilanAyah || '',
+          payload.parentData?.namaIbu || '',
+          payload.parentData?.nikIbu || '',
+          payload.parentData?.pekerjaanIbu || '',
+          payload.parentData?.penghasilanIbu || ''
+        ];
+        sheet.getRange(rowNum, 1, 1, updateRow.length).setValues([updateRow]);
+        return ContentService.createTextOutput(JSON.stringify({ success: true }))
+          .setMimeType(ContentService.MimeType.JSON);
+      }
+    }
+  }
+
+  if (action === 'DELETE') {
+    const data = sheet.getDataRange().getValues();
+    const idIndex = 0;
+    for (let i = 1; i < data.length; i++) {
+      if (data[i][idIndex] === payload.id) {
+        sheet.deleteRow(i + 1);
+        return ContentService.createTextOutput(JSON.stringify({ success: true }))
+          .setMimeType(ContentService.MimeType.JSON);
+      }
+    }
+  }
+}
+*/
